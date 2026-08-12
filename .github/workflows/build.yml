@@ -1,0 +1,26 @@
+name: Build APK
+
+on:
+  push:
+    branches: [ "main", "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Setup EAS
+        run: npm install -g eas-cli
+
+      - name: Build Android App
+        run: |
+          npx expo build:android -t apk || true
+          
